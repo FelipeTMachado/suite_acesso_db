@@ -1,0 +1,120 @@
+@startuml
+interface FabricaConexao {
+  + conectar(): Connection
+  + estaConectado(): boolean
+}
+
+class FabricaConexaoMySQL {
+  - usuario: String
+  - senha: String
+  - local: String
+  - porta: Integer
+  - conexao: Connection
+  + conectar(): Connection
+  + estaConectado(): boolean
+}
+
+class FabricaConexaoSQLite {
+  - local: String
+  - conexao: Connection
+  + conectar(): Connection
+  + estaConectado(): boolean
+}
+
+class Gerenciador {
+  - esquemas: ArrayList<Esquema>
+  - fabricaConexao: FabricaConexao
+  + novoEsquema()
+  + buscarEsquema()
+  + setarDadosConexao()
+  + conectar()
+  + conexao()
+  + executarScript(sql: String)
+}
+
+class GerenciadorScripts {
+  + gerarScriptDDL(objeto: ObjetoRelacional, tipo: TipoDDL): String
+}
+
+class ObjetoRelacional {
+  - nome: String;
+  + ObjetoRelacional(nome: String)
+}
+
+enum TipoDDL {
+  CREATE
+  ALTER
+  DROP
+}
+
+class Esquema {
+  - tabelas: ArrayList<Tabela>
+  + Esquema(nome: String)
+  + adicionarTabela(tabela: Tabela)
+}
+
+class Tabela {
+  - colunas: ArrayList<Coluna>
+  - chavesPrimarias<ChavePrimaria>
+  - chavesEstrnageiras<ChaveEstrangeira>
+  + Tabela(nome: String)
+  + adicionarColuna(coluna: Coluna)
+  + adicionarChavePrimaria(chave: ChavePrimaria)
+  + adicionarChaveEstrangeira(chave: ChaveEstrangeira)
+}
+
+class ChaveEstrangeira {
+  - tabelaDestino: Tabela
+  - colunaOrigem: Coluna
+  - colunaDestino: Coluna
+  + ChaveEstrangeira(colunaOrigem: Coluna, tabelaDestino: Tabela, colunaDestino: Coluna,)
+}
+
+class ChavePrimaria {
+  - coluna: Coluna
+  + chavePrimaria(coluna: Coluna)
+}
+
+class Coluna {
+  - notNull: boolean
+  - autoIncrement: boolean
+  + Colunas(none: String)
+}
+
+class ColunaInt {
+  - tamanho: Integer
+  + ColunaInt(nome: String, larguraExibicao: Integer)
+}
+
+class ColunaVarchar {
+  - tamanho: Integer
+  + ColunaVarchar(nome: String, tamanho: Integer)
+}
+
+class ColunaDecimal {
+  - precisao: Integer
+  - escala: Integer
+  + ColunaDecimal(nome: String, precisao: Integer, escala: Integer)
+}
+
+FabricaConexao     <|.. FabricaConexaoMySQL
+FabricaConexao     <|.. FabricaConexaoSQLite
+Gerenciador         --o FabricaConexao
+Gerenciador         --> GerenciadorScripts
+GerenciadorScripts  --> TipoDDL
+GerenciadorScripts  --> ObjetoRelacional
+Esquema            --|> ObjetoRelacional
+Tabela             --|> ObjetoRelacional
+Coluna             --|> ObjetoRelacional
+ChaveEstrangeira   --|> ObjetoRelacional
+ChavePrimaria      --|> ObjetoRelacional
+ChaveEstrangeira   --o Tabela
+Tabela             --o ChaveEstrangeira
+Tabela             --o ChavePrimaria
+Tabela             --o Coluna
+ChavePrimaria      --o Coluna
+Esquema            --o Tabela
+ColunaInt          --|> Coluna
+ColunaVarchar      --|> Coluna
+ColunaDecimal      --|> Coluna
+@enduml
