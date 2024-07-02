@@ -1,5 +1,6 @@
 content_assist_completion_replacement_background=200,200,0
 content_assist_completion_replacement_foreground=160,0,0
+content_assist_number_of_computers=20
 content_assist_parameters_background=39,22,65
 content_assist_parameters_foreground=235,228,246
 content_assist_proposals_background=39,22,65
