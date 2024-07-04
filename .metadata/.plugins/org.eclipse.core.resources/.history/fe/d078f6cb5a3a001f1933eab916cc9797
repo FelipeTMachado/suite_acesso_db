@@ -1,0 +1,8 @@
+package projeto.estrutura;
+
+public class ColunaFacade {
+	public static Coluna criarColunaVarchar(String nome, int tamanho) {
+		
+		return new ColunaVarchar(nome, tamanho)
+	}
+}
