@@ -7,6 +7,7 @@ import projeto.estrutura.ChaveEstrangeira;
 import projeto.estrutura.ChavePrimaria;
 import projeto.estrutura.Coluna;
 import projeto.estrutura.ColunaDecimal;
+import projeto.estrutura.ColunaFacade;
 import projeto.estrutura.ColunaInt;
 import projeto.estrutura.ColunaVarchar;
 import projeto.estrutura.Esquema;
@@ -22,9 +23,9 @@ public class Testes {
 		// TABELA ENDERECO
 		Tabela endereco = new Tabela("endereco");
 		
-		Coluna idendereco = new ColunaInt("idendereco");
-		Coluna logradouro = new ColunaVarchar("logradouro", 200);
-		Coluna numero     = new ColunaVarchar("numero", 8);
+		Coluna idendereco = ColunaFacade.criarColunaInt("idendereco");
+		Coluna logradouro = ColunaFacade.criarColunaVarchar("logradouro", 200);
+		Coluna numero     = ColunaFacade.criarColunaVarchar("numero", 8);
 		
 		endereco.adicionarColuna(idendereco);
 		endereco.adicionarColuna(logradouro);
@@ -37,9 +38,9 @@ public class Testes {
 		// TABELA PESSOA
 		Tabela pessoa = new Tabela("pessoa");
 		
-		Coluna nome       = new ColunaVarchar("nome", 200);
-		Coluna codigo     = new ColunaInt("idpessoa");
-		Coluna salario    = new ColunaDecimal("salario", 5, 2);
+		Coluna nome       = ColunaFacade.criarColunaVarchar("nome", 200);
+		Coluna codigo     = ColunaFacade.criarColunaInt("idpessoa");
+		Coluna salario    = ColunaFacade.criarColunaDecimal("salario", 5, 2);
 		
 		salario.setAutoIncrement(true);
 		codigo.setNotNull(true);
