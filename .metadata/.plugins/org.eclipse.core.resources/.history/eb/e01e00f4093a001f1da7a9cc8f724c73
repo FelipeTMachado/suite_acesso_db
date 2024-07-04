@@ -1,0 +1,21 @@
+package projeto.estrutura;
+
+public class ColunaVarchar extends Coluna{
+	// ATRIBUTOS
+	private Integer tamanho;
+	
+	
+	// CONSTRUTOR
+	public ColunaVarchar(String nome) {
+		super(nome);
+	}
+
+	
+	// GETTERS AND SETTERS
+	public Integer getTamanho() {
+		return tamanho;
+	}
+	public void setTamanho(Integer tamanho) {
+		this.tamanho = tamanho;
+	}
+}

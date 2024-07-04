@@ -1,0 +1,56 @@
+package projeto.testes;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import projeto.conexao.FabricaConexao;
+import projeto.conexao.FabricaConexaoMySQL;
+import projeto.estrutura.ChavePrimaria;
+import projeto.estrutura.Coluna;
+import projeto.estrutura.ColunaDecimal;
+import projeto.estrutura.ColunaInt;
+import projeto.estrutura.ColunaVarchar;
+import projeto.estrutura.Esquema;
+import projeto.estrutura.Tabela;
+import projeto.gerenciador.Gerenciador;
+import projeto.gerenciador.GerenciadorScripts;
+import projeto.gerenciador.TipoDDL;
+
+public class Testes {
+	public static void main(String[] args) {
+		Gerenciador gerenciador = Gerenciador.getInstance();
+		
+		Esquema sistema = new Esquema("sistema");
+		Tabela pessoa = new Tabela("pessoa");
+		
+		Coluna nome = new ColunaVarchar("nome", 200);
+		Coluna codigo = new ColunaInt("codigo");
+		Coluna salario = new ColunaDecimal("salario", 2, 5);
+		
+		salario.setAutoIncrement(true);
+		codigo.setNotNull(true);
+		
+		ChavePrimaria chaveCodigoPessoa = new ChavePrimaria("PK_Chave", codigo);
+		ChavePrimaria chaveNomePessoa = new ChavePrimaria("PK_Nome", nome, salario);
+		
+		
+		pessoa.adicionarColuna(nome);
+		pessoa.adicionarColuna(codigo);
+		pessoa.adicionarColuna(salario);
+		
+		pessoa.adicionarChavePrimaria(chaveCodigoPessoa);
+		pessoa.adicionarChavePrimaria(chaveNomePessoa);
+		
+		
+		
+		sistema.adicionarTabela(pessoa);
+		
+		try {
+			Gerenciador.getInstance().setFabricaConexao(new FabricaConexaoMySQL("root", "315865", "127.0.0.1", 3306));
+			Gerenciador.getInstance().conectar();
+			Gerenciador.getInstance().executarScript(sistema);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+}

@@ -1,0 +1,47 @@
+package projeto.gerenciador;
+
+import java.util.ArrayList;
+
+import projeto.conexao.FabricaConexao;
+import projeto.estrutura.Esquema;
+
+public class Gerenciador {
+	// ATRIBUTOS
+	private ArrayList<Esquema> esquemas = new ArrayList<Esquema>();
+	private FabricaConexao fabricaConexao;
+	
+	
+	// METODOS FUNCIONAIS
+	public Esquema novoEsquema(String nome) {
+		Esquema esquema = new Esquema(nome);
+		esquemas.add(esquema);
+		
+		return esquema;
+	}
+	
+	
+	public Esquema buscarEsquema(String nome) {
+		for (Esquema esquema : esquemas) {
+			if (esquema.getNome().equals(nome)) {
+				return esquema;
+			}
+		}
+		
+		return null;
+	}
+
+
+	// GETTERS AND SETTERS
+	public ArrayList<Esquema> getEsquemas() {
+		return esquemas;
+	}
+	public void setEsquemas(ArrayList<Esquema> esquemas) {
+		this.esquemas = esquemas;
+	}
+	public FabricaConexao getFabricaConexao() {
+		return fabricaConexao;
+	}
+	public void setFabricaConexao(FabricaConexao fabricaConexao) {
+		this.fabricaConexao = fabricaConexao;
+	}
+}

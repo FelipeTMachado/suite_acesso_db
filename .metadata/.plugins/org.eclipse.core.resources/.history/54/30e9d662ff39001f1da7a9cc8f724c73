@@ -1,0 +1,66 @@
+package projeto.conexao;
+
+import java.sql.Connection;
+
+public class FabricaConexaoMySQL implements FabricaConexao {
+	// ATRIBUTOS
+	private String     usuario;
+	private String     senha;
+	private String     local;
+	private Integer    porta; 
+	private Connection conexao;
+	
+	
+	// CONSTRUTOR
+	public FabricaConexaoMySQL() {
+		
+	}
+	
+	
+	// METODOS FUNCIONAIS
+	@Override
+	public Connection conectar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public boolean estaConectado() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	
+	// GETTERS AND SETTERS
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public String getLocal() {
+		return local;
+	}
+	public void setLocal(String local) {
+		this.local = local;
+	}
+	public Integer getPorta() {
+		return porta;
+	}
+	public void setPorta(Integer porta) {
+		this.porta = porta;
+	}
+	public Connection getConexao() {
+		return conexao;
+	}
+	public void setConexao(Connection conexao) {
+		this.conexao = conexao;
+	}
+}

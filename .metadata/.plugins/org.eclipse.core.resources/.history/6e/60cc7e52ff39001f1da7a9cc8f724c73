@@ -1,0 +1,34 @@
+package projeto.conexao;
+
+import java.sql.Connection;
+
+public class FabricaConexaoMySQL implements FabricaConexao {
+	// ATRIBUTOS
+	private String  usuario;
+	private String  senha;
+	private String  local;
+	private Integer porta; 
+	
+	
+	// CONSTRUTOR
+	public FabricaConexaoMySQL() {
+		
+	}
+	
+	
+	// METODOS FUNCIONAIS
+	@Override
+	public Connection conectar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public boolean estaConectado() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+	
+}

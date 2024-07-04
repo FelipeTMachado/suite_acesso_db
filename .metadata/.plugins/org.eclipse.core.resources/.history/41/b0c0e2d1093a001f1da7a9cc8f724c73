@@ -1,0 +1,7 @@
+package projeto.estrutura;
+
+public class ColunaVarchar extends Coluna{
+	public ColunaVarchar(String nome) {
+		super(nome);
+	}
+}

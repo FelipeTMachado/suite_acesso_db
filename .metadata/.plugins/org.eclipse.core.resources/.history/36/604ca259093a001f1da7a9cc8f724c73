@@ -1,0 +1,6 @@
+package projeto.estrutura;
+
+public class ColunaInt extends Coluna{
+	public public ColunaInt(String nome) {
+		super(nome);
+	}

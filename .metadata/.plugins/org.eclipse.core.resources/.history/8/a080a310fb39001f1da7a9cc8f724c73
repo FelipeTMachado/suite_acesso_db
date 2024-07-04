@@ -1,0 +1,7 @@
+package projeto.estrutura;
+
+public class Esquema extends ObjetoRelacional {
+	public Esquema(String nome) {
+		super(nome);
+	}
+}

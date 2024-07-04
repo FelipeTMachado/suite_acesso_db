@@ -1,0 +1,7 @@
+package projeto.estrutura;
+
+public class ColunaDecimal extends Coluna {
+	public ColunaDecimal(String nome) {
+		super(nome);
+	}
+}

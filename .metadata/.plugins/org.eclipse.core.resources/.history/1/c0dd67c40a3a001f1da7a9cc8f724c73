@@ -1,0 +1,9 @@
+package projeto.estrutura;
+
+public class ColunaInt extends Coluna{
+	private Integer larguraExibicao;
+	
+	public ColunaInt(String nome) {
+		super(nome);
+	}
+}

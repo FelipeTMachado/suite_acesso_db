@@ -1,0 +1,33 @@
+package projeto.testes;
+
+import projeto.estrutura.Coluna;
+import projeto.estrutura.ColunaDecimal;
+import projeto.estrutura.ColunaInt;
+import projeto.estrutura.ColunaVarchar;
+import projeto.estrutura.Esquema;
+import projeto.estrutura.Tabela;
+import projeto.gerenciador.GerenciadorScripts;
+import projeto.gerenciador.TipoDDL;
+
+public class Testes {
+	public static void main(String[] args) {
+		Esquema sistema = new Esquema("sistema");
+		Tabela pessoa = new Tabela("pessoa");
+		
+		Coluna nome = new ColunaVarchar("nome", 200);
+		Coluna codigo = new ColunaInt("codigo");
+		Coluna salario = new ColunaDecimal("salario", 2, 5);
+		
+		salario.setAutoIncrement(true);
+		
+		pessoa.adicionarColuna(nome);
+		pessoa.adicionarColuna(codigo);
+		pessoa.adicionarColuna(salario);
+		
+		sistema.adicionarTabela(pessoa);
+		
+		System.out.println(
+				GerenciadorScripts.gerarScriptDDL(sistema, TipoDDL.CREATE)
+		);
+	}
+}

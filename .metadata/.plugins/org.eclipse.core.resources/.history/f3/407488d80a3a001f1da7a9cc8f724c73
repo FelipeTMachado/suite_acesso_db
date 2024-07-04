@@ -1,0 +1,22 @@
+package projeto.estrutura;
+
+public class ColunaInt extends Coluna{
+	// ATRIBUTOS
+	private Integer larguraExibicao;
+	
+	
+	
+	// CONSTRUCTOR
+	public ColunaInt(String nome) {
+		super(nome);
+	}
+
+	
+	// GETTERS AND SETTERS
+	public Integer getLarguraExibicao() {
+		return larguraExibicao;
+	}
+	public void setLarguraExibicao(Integer larguraExibicao) {
+		this.larguraExibicao = larguraExibicao;
+	}
+}

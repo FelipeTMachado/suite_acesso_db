@@ -1,0 +1,10 @@
+package projeto.estrutura;
+
+public class Coluna extends ObjetoRelacional{
+	private boolean notNull = false;
+	private boolean autoIncrement = false;
+	
+	public Coluna(String nome) {
+		// TODO Auto-generated constructor stub
+	}
+}

@@ -1,0 +1,68 @@
+package projeto.testes;
+
+import java.sql.SQLException;
+
+import projeto.conexao.FabricaConexaoMySQL;
+import projeto.estrutura.ChaveEstrangeira;
+import projeto.estrutura.ChavePrimaria;
+import projeto.estrutura.Coluna;
+import projeto.estrutura.ColunaDecimal;
+import projeto.estrutura.ColunaInt;
+import projeto.estrutura.ColunaVarchar;
+import projeto.estrutura.Esquema;
+import projeto.estrutura.Tabela;
+import projeto.gerenciador.Gerenciador;
+
+public class Testes {
+	public static void main(String[] args) {
+		Gerenciador gerenciador = Gerenciador.getInstance();
+		
+		Esquema sistema = new Esquema("sistema");
+		
+		// TABELA ENDERECO
+		Tabela endereco = new Tabela("endereco");
+		
+		Coluna idendereco = new ColunaInt("idendereco");
+		Coluna logradouro = new ColunaVarchar("logradouro", 200);
+		Coluna numero     = new ColunaVarchar("numero", 8);
+		
+		endereco.adicionarColuna(idendereco);
+		endereco.adicionarColuna(logradouro);
+		endereco.adicionarColuna(numero);
+		
+		// TABELA PESSOA
+		Tabela pessoa = new Tabela("pessoa");
+		
+		Coluna nome       = new ColunaVarchar("nome", 200);
+		Coluna codigo     = new ColunaInt("idpessoa");
+		Coluna salario    = new ColunaDecimal("salario", 5, 2);
+		
+		salario.setAutoIncrement(true);
+		codigo.setNotNull(true);
+		
+		
+		ChavePrimaria chaveCodigoPessoa = new ChavePrimaria("PK_Chave", codigo);
+		
+		pessoa.adicionarColuna(nome);
+		pessoa.adicionarColuna(codigo);
+		pessoa.adicionarColuna(salario);
+		pessoa.adicionarColuna(idendereco);
+		
+		pessoa.adicionarChavePrimaria(chaveCodigoPessoa);
+		
+//		sistema.adicionarTabela(endereco);
+		sistema.adicionarTabela(pessoa);
+		
+		try {
+			Gerenciador.getInstance().setFabricaConexao(new FabricaConexaoMySQL("root", "315865", "127.0.0.1", 3306));
+			Gerenciador.getInstance().conectar();
+			
+			System.out.println(Gerenciador.getInstance().gerarSQLTabela(endereco));
+			System.out.println(Gerenciador.getInstance().gerarSQLTabela(pessoa));
+//			Gerenciador.getInstance().executarScript(sistema);		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,163 @@
+package projeto.gerenciador;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import projeto.conexao.FabricaConexao;
+import projeto.estrutura.Coluna;
+import projeto.estrutura.ColunaDecimal;
+import projeto.estrutura.ColunaInt;
+import projeto.estrutura.ColunaVarchar;
+import projeto.estrutura.Esquema;
+import projeto.estrutura.Tabela;
+
+public class Gerenciador {
+	// ATRIBUTOS
+	private static Gerenciador instance;
+	private ArrayList<Esquema> esquemas = new ArrayList<Esquema>();
+	private FabricaConexao fabricaConexao;
+	private Connection conexao;
+	private boolean conectado;
+	
+	
+	private Gerenciador() {
+		
+	}
+	
+	// CONSTRUTOR
+	public static Gerenciador getInstance() {
+		if (instance == null) {
+			instance = new Gerenciador();
+		}
+		
+		return instance;
+	}
+	
+	
+	// METODOS FUNCIONAIS
+	public Esquema novoEsquema(String nome) {
+		Esquema esquema = new Esquema(nome);
+		esquemas.add(esquema);
+		
+		return esquema;
+	}
+	
+	
+	public Esquema buscarEsquema(String nome) {
+		for (Esquema esquema : esquemas) {
+			if (esquema.getNome().equals(nome)) {
+				return esquema;
+			}
+		}
+		
+		return null;
+	}
+
+	
+	public boolean conectar() throws SQLException {
+		conexao = fabricaConexao.conectar();
+		setConectado(fabricaConexao.estaConectado());
+		
+		if (isConectado()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
+	public boolean executarScript(Esquema esquema) throws SQLException {
+		Statement st = conexao.createStatement();
+		
+		String sql = "CREATE DATABASE " + esquema.getNome();
+		
+		System.out.println(sql);
+		
+		st.execute("DROP DATABASE sistema");
+		st.execute(sql);
+		st.execute("USE " + esquema.getNome());
+		
+		
+		for (Tabela tabela : esquema.getTabelas()) {
+			sql = "";
+			
+			sql += "CREATE TABLE " + tabela.getNome() + "( ";
+			
+			for (Coluna coluna : tabela.getColunas()) {
+				
+			}
+			System.out.println(sql);
+			st.execute(sql);
+		}
+		
+		return true;
+	}
+	
+	public void gerarSQLColuna(Coluna coluna) {
+		String sql = "    " + coluna.getNome() + " ";
+		
+		if (coluna instanceof ColunaVarchar) {
+			ColunaVarchar col = (ColunaVarchar) coluna;
+			
+			sql += "VARCHAR (" + col.getTamanho().toString() + ")";
+		}
+		
+		// OPCOES PARA INT
+		if (coluna instanceof ColunaInt) {
+			ColunaInt col = (ColunaInt) coluna;
+			
+			sql += "INT";
+			
+			if (!(col.getLarguraExibicao() == null)) {
+				sql += "INT (" + col.getLarguraExibicao().toString() + ")";
+			}
+		}
+		
+		
+		// OPCOES PARA DECIMAL
+		if (coluna instanceof ColunaDecimal) {
+			ColunaDecimal col = (ColunaDecimal) coluna;
+			
+			sql += "DECIMAL";
+			if (!((col.getEscala() == null) && (col.getPrecisao() == null))) {
+				sql += " (" + col.getPrecisao() + "," + col.getEscala() + ")"; 
+			}
+		}
+		
+		if (coluna.isAutoIncrement()) {
+			sql += " AUTO_INCREMENT";
+		}
+		
+		if (coluna.isNotNull()) {
+			sql += " NOT NULL";
+		}
+	}
+
+	// GETTERS AND SETTERS
+	public ArrayList<Esquema> getEsquemas() {
+		return esquemas;
+	}
+	public void setEsquemas(ArrayList<Esquema> esquemas) {
+		this.esquemas = esquemas;
+	}
+	public FabricaConexao getFabricaConexao() {
+		return fabricaConexao;
+	}
+	public void setFabricaConexao(FabricaConexao fabricaConexao) {
+		this.fabricaConexao = fabricaConexao;
+	}
+	public Connection getConexao() {
+		return conexao;
+	}
+	public void setConexao(Connection conexao) {
+		this.conexao = conexao;
+	}
+	public boolean isConectado() {
+		return conectado;
+	}
+	public void setConectado(boolean conectado) {
+		this.conectado = conectado;
+	}
+}

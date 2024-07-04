@@ -1,0 +1,7 @@
+package projeto.estrutura;
+
+public class Tabela extends ObjetoRelacional {
+	public Tabela(String nome) {
+		super(nome);
+	}
+}

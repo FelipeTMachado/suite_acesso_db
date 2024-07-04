@@ -1,0 +1,153 @@
+package projeto.gerenciador;
+
+import projeto.estrutura.ChavePrimaria;
+import projeto.estrutura.Coluna;
+import projeto.estrutura.ColunaDecimal;
+import projeto.estrutura.ColunaInt;
+import projeto.estrutura.ColunaVarchar;
+import projeto.estrutura.Esquema;
+import projeto.estrutura.ObjetoRelacional;
+import projeto.estrutura.Tabela;
+
+public class GerenciadorScripts {	
+	// METODOS FUNCIONAIS
+	public static String gerarScriptDDL(ObjetoRelacional objeto, TipoDDL tipo) throws IllegalArgumentException {
+		switch (tipo) {
+		case CREATE: {
+			return construir(objeto);
+		}
+		default:
+			throw new IllegalArgumentException("Valor inesperado: " + tipo);
+		}
+	}
+	
+	
+	private static String construir(ObjetoRelacional objeto) {
+		if (objeto instanceof Esquema) {
+			return construirEsquema((Esquema) objeto);
+		} 
+		
+		if (objeto instanceof Tabela) {
+			return construirTabela((Tabela) objeto);
+		}
+		
+		if (objeto instanceof Coluna) {
+			return construirColuna((Coluna) objeto);
+		}
+		
+		return null;
+	}
+	
+	private static String construirEsquema(Esquema esquema) {
+		String sql = "CREATE DATABASE " + esquema.getNome() + ";\n\n";
+		
+		for (Tabela tabela: esquema.getTabelas()) {
+			sql += construirTabela(tabela);
+		}
+		
+		return sql;
+	}
+	
+	private static String construirTabela(Tabela tabela) {
+		String sql = "CREATE TABLE " + tabela.getNome() + " (\n";
+		
+		
+		int indice = 0;
+		for (Coluna coluna : tabela.getColunas()) {
+			sql += construirColuna(coluna);
+			
+			indice ++;
+			
+			if (!(indice == tabela.getColunas().size())) {
+				sql += ",\n";
+			}
+		}
+		
+		indice = 0;
+		for (ChavePrimaria chave : tabela.getChavesPrimarias()) {
+			if (indice == 0) {
+				sql += ",\n";
+			}
+			
+			sql += construirChavePrimaria(chave);
+			
+			if (indice == tabela.getChavesPrimarias().size()) {
+				sql += ",\n";
+			}
+		}
+		
+		sql += "\n);";
+		
+		return sql;
+	}
+
+	private static String construirChavePrimaria(ChavePrimaria chave) {
+		String sql = "";
+		
+		if (chave.getColunas().size() == 1) {
+			sql += "\n   PRIMARY KEY ("+ chave.getColunas().get(0).getNome() +")";
+		} else {
+			sql += "CONSTRAINT " + chave.getNome() + " PRIMARY KEY (";
+			
+			int indice = 0;
+			
+			for (Coluna coluna : chave.getColunas()) {
+				 sql += coluna.getNome();
+				 
+				 indice ++;
+				 
+				 if (!(indice == chave.getColunas().size())) {
+					 
+				 }
+			}
+		}
+		
+		
+		
+		return sql;
+	}
+	
+	private static String construirColuna(Coluna coluna) {
+		String sql = "   " + coluna.getNome() + " ";
+		
+		// OPCOES PARA VARCHAR
+		if (coluna instanceof ColunaVarchar) {
+			ColunaVarchar col = (ColunaVarchar) coluna;
+			
+			sql += "VARCHAR (" + col.getTamanho().toString() + ")";
+		}
+		
+		
+		// OPCOES PARA INT
+		if (coluna instanceof ColunaInt) {
+			ColunaInt col = (ColunaInt) coluna;
+			
+			sql += "INT";
+			
+			if (!(col.getLarguraExibicao() == null)) {
+				sql += "INT (" + col.getLarguraExibicao().toString() + ")";
+			}
+		}
+		
+		
+		// OPCOES PARA DECIMAL
+		if (coluna instanceof ColunaDecimal) {
+			ColunaDecimal col = (ColunaDecimal) coluna;
+			
+			sql += "DECIMAL";
+			if (!((col.getEscala() == null) && (col.getPrecisao() == null))) {
+				sql += " (" + col.getPrecisao() + "," + col.getEscala() + ")"; 
+			}
+		}
+		
+		if (coluna.isAutoIncrement()) {
+			sql += " AUTO_INCREMENT";
+		}
+		
+		if (coluna.isNotNull()) {
+			sql += " NOT NULL";
+		}
+	
+		return sql;
+	}
+}

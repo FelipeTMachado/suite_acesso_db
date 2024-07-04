@@ -1,0 +1,25 @@
+package projeto.estrutura;
+
+import java.util.ArrayList;
+
+public class Esquema extends ObjetoRelacional {
+	// ATRIBUTOS
+	private ArrayList<Tabela> tabelas = new ArrayList<Tabela>();
+	
+	
+	
+	// CONSTRUTOR
+	public Esquema(String nome) {
+		super(nome);
+	}
+	
+	
+	
+	// GETTERS AND SETTERS
+	public void setTabelas(ArrayList<Tabela> tabelas) {
+		this.tabelas = tabelas;
+	}
+	public ArrayList<Tabela> getTabelas() {
+		return tabelas;
+	}
+}

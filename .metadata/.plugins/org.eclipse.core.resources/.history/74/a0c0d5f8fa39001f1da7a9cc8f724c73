@@ -1,0 +1,9 @@
+package projeto.estrutura;
+
+public class ObjetoRelacional {
+	private String nome;
+	
+	public ObjetoRelacional(String nome) {
+		this.nome = nome;
+	}
+}

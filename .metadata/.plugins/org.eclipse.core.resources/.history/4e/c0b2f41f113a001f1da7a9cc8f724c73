@@ -1,0 +1,30 @@
+package projeto.estrutura;
+
+public class ChavePrimaria {
+	// ATRIBUTOS
+	private Coluna coluna;
+	
+	
+	
+	// CONSTRUTORES 
+	public ChavePrimaria(Coluna coluna) {
+		this.coluna = coluna;
+	}
+	
+	public ChavePrimaria(String nome) {
+		coluna = new Coluna(nome);
+	}
+	
+	public ChavePrimaria(Coluna... colunas) {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	// GETTERS AND SETTERS
+	public Coluna getColuna() {
+		return coluna;
+	}
+	public void setColuna(Coluna coluna) {
+		this.coluna = coluna;
+	}
+}

@@ -1,0 +1,11 @@
+package projeto.estrutura;
+
+import java.util.ArrayList;
+
+public class Esquema extends ObjetoRelacional {
+	private ArrayList<Tabela> tabelas = new ArrayList<Tabela>();
+	
+	public Esquema(String nome) {
+		super(nome);
+	}
+}

@@ -1,0 +1,10 @@
+package projeto.estrutura;
+
+public class ColunaDecimal extends Coluna {
+	private Integer precisao = null;
+	private Integer escala = null;
+	
+	public ColunaDecimal(String nome) {
+		super(nome);
+	}
+}

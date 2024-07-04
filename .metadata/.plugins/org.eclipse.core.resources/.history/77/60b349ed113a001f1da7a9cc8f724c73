@@ -1,0 +1,21 @@
+package projeto.estrutura;
+
+import java.util.ArrayList;
+
+public class ChavePrimaria {
+	// ATRIBUTOS
+	private ArrayList<Coluna> colunas = new ArrayList<Coluna>();
+	
+	
+	
+	// CONSTRUTORES 
+	public ChavePrimaria(Coluna coluna) {
+		this.colunas.add(coluna);
+	}
+	
+	public ChavePrimaria(Coluna... colunas) {
+		for (Coluna coluna : colunas) {
+			
+		}
+	}
+}

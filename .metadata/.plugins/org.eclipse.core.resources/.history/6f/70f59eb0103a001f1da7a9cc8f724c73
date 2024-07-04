@@ -1,0 +1,29 @@
+package projeto.estrutura;
+
+public class ChavePrimaria extends ObjetoRelacional{
+	// ATRIBUTOS
+	private Coluna coluna;
+	
+	
+	
+	// CONSTRUTORES 
+	public ChavePrimaria(Coluna coluna) {
+		super(coluna.getNome());
+	}
+	
+	public ChavePrimaria(String nome) {
+		super(nome);
+		
+		coluna = new Coluna(nome);
+	}
+	
+	
+	
+	// GETTERS AND SETTERS
+	public Coluna getColuna() {
+		return coluna;
+	}
+	public void setColuna(Coluna coluna) {
+		this.coluna = coluna;
+	}
+}

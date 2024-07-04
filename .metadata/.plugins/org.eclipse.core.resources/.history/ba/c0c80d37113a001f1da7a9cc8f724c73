@@ -1,0 +1,32 @@
+package projeto.estrutura;
+
+import java.util.ArrayList;
+
+public class ChavePrimaria {
+	// ATRIBUTOS
+	private ArrayList<Coluna> colunas = new ArrayList<Coluna>();
+	
+	
+	
+	// CONSTRUTORES 
+	public ChavePrimaria(Coluna coluna) {
+		this.colunas.add(coluna);
+	}
+	
+	public ChavePrimaria(String nome) {
+		coluna = new Coluna(nome);
+	}
+	
+	public ChavePrimaria(Coluna... colunas) {
+		
+	}
+	
+	
+	// GETTERS AND SETTERS
+	public Coluna getColuna() {
+		return coluna;
+	}
+	public void setColuna(Coluna coluna) {
+		this.coluna = coluna;
+	}
+}

@@ -1,0 +1,110 @@
+package projeto.gerenciador;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import projeto.conexao.FabricaConexao;
+import projeto.estrutura.Esquema;
+
+public class Gerenciador {
+	// ATRIBUTOS
+	private static Gerenciador instance;
+	private ArrayList<Esquema> esquemas = new ArrayList<Esquema>();
+	private FabricaConexao fabricaConexao;
+	private Connection conexao;
+	private boolean conectado;
+	
+	
+	private Gerenciador() {
+		
+	}
+	
+	// CONSTRUTOR
+	public static Gerenciador getInstance() {
+		if (instance == null) {
+			instance = new Gerenciador();
+		}
+		
+		return instance;
+	}
+	
+	
+	// METODOS FUNCIONAIS
+	public Esquema novoEsquema(String nome) {
+		Esquema esquema = new Esquema(nome);
+		esquemas.add(esquema);
+		
+		return esquema;
+	}
+	
+	
+	public Esquema buscarEsquema(String nome) {
+		for (Esquema esquema : esquemas) {
+			if (esquema.getNome().equals(nome)) {
+				return esquema;
+			}
+		}
+		
+		return null;
+	}
+
+	
+	public boolean conectar() throws SQLException {
+		conexao = fabricaConexao.conectar();
+		setConectado(fabricaConexao.estaConectado());
+		
+		if (isConectado()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+	public boolean gerarEstruturaCompleta() throws SQLException {
+		for (Esquema esquema : esquemas) {
+			executarScript(GerenciadorScripts.gerarScriptDDL(esquema, TipoDDL.CREATE));
+		}
+		
+		return true;
+	}
+	
+	public boolean executarScript(String sql) throws SQLException {
+		Statement st = conexao.createStatement();
+		
+		st.addBatch("CREATE DATABASE sistema");
+		st.addBatch("USE sistema");
+		
+		st.executeBatch();
+		
+		return true;
+	}
+
+	// GETTERS AND SETTERS
+	public ArrayList<Esquema> getEsquemas() {
+		return esquemas;
+	}
+	public void setEsquemas(ArrayList<Esquema> esquemas) {
+		this.esquemas = esquemas;
+	}
+	public FabricaConexao getFabricaConexao() {
+		return fabricaConexao;
+	}
+	public void setFabricaConexao(FabricaConexao fabricaConexao) {
+		this.fabricaConexao = fabricaConexao;
+	}
+	public Connection getConexao() {
+		return conexao;
+	}
+	public void setConexao(Connection conexao) {
+		this.conexao = conexao;
+	}
+	public boolean isConectado() {
+		return conectado;
+	}
+	public void setConectado(boolean conectado) {
+		this.conectado = conectado;
+	}
+}

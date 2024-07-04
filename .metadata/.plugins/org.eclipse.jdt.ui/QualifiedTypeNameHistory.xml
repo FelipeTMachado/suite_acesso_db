@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="projeto.estrutura.Esquema"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="projeto.estrutura.ChavePrimaria"/>
+    <fullyQualifiedTypeName name="projeto.gerenciador.GerenciadorScripts"/>
+    <fullyQualifiedTypeName name="projeto.gerenciador.Gerenciador"/>
+    <fullyQualifiedTypeName name="projeto.conexao.FabricaConexao"/>
+    <fullyQualifiedTypeName name="projeto.conexao.FabricaConexaoMySQL"/>
+</qualifiedTypeNameHistroy>
