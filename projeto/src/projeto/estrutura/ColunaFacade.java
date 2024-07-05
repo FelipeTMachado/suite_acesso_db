@@ -5,8 +5,7 @@ public class ColunaFacade {
 		
 		return new ColunaVarchar(nome, tamanho);
 	}
-	
-	
+		
 	public static Coluna criarColunaInt(String nome) {
 		
 		return new ColunaInt(nome);
@@ -16,7 +15,7 @@ public class ColunaFacade {
 		
 		return new ColunaInt(nome, larguraExibicao);
 	}
-
+	
 	public static Coluna criarColunaDecimal(String nome) {
 		
 		return new ColunaDecimal(nome);

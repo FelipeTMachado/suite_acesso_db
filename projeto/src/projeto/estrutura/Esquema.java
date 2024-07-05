@@ -19,10 +19,6 @@ public class Esquema extends ObjetoRelacional {
 		tabelas.add(tabela);
 	}
 	
-	public void gerarTabelaAssociativa() {
-		
-	}
-	
 	public Tabela buscarTabela(String nomeTabela) {
 		for (Tabela tabela : tabelas) {
 			if (tabela.getNome().equals(nomeTabela)) {

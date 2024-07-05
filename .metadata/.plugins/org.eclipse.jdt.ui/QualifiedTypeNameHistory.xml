@@ -6,11 +6,14 @@
     <fullyQualifiedTypeName name="projeto.conexao.FabricaConexao"/>
     <fullyQualifiedTypeName name="projeto.conexao.FabricaConexaoMySQL"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="projeto.estrutura.Coluna"/>
-    <fullyQualifiedTypeName name="projeto.gerenciador.Gerenciador"/>
-    <fullyQualifiedTypeName name="projeto.estrutura.Tabela"/>
-    <fullyQualifiedTypeName name="projeto.estrutura.ColunaInt"/>
     <fullyQualifiedTypeName name="projeto.estrutura.ColunaVarchar"/>
-    <fullyQualifiedTypeName name="projeto.estrutura.ChaveEstrangeira"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="projeto.estrutura.ColunaInt"/>
+    <fullyQualifiedTypeName name="projeto.estrutura.ColunaDecimal"/>
+    <fullyQualifiedTypeName name="projeto.estrutura.Tabela"/>
+    <fullyQualifiedTypeName name="projeto.estrutura.Coluna"/>
+    <fullyQualifiedTypeName name="projeto.estrutura.ColunaFacade"/>
     <fullyQualifiedTypeName name="projeto.estrutura.ChavePrimaria"/>
+    <fullyQualifiedTypeName name="projeto.estrutura.ChaveEstrangeira"/>
+    <fullyQualifiedTypeName name="projeto.gerenciador.Gerenciador"/>
 </qualifiedTypeNameHistroy>

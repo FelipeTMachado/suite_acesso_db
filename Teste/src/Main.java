@@ -1,20 +1,15 @@
-package projeto.testes;
-
 import java.sql.SQLException;
 
 import projeto.conexao.FabricaConexaoMySQL;
 import projeto.estrutura.ChaveEstrangeira;
 import projeto.estrutura.ChavePrimaria;
 import projeto.estrutura.Coluna;
-import projeto.estrutura.ColunaDecimal;
 import projeto.estrutura.ColunaFacade;
-import projeto.estrutura.ColunaInt;
-import projeto.estrutura.ColunaVarchar;
 import projeto.estrutura.Esquema;
 import projeto.estrutura.Tabela;
 import projeto.gerenciador.Gerenciador;
 
-public class Testes {
+public class Main {
 	public static void main(String[] args) {
 		Gerenciador gerenciador = Gerenciador.getInstance();
 		
@@ -56,15 +51,18 @@ public class Testes {
 		pessoa.adicionarChavePrimaria(chaveCodigoPessoa);
 		pessoa.adicionarChaveEstrangeira(chaveIdEndereco);
 		
+		
+		Tabela endereco_pessoa = gerenciador.gerarTabelaAssociativa(endereco, pessoa);
+		
 		sistema.adicionarTabela(endereco);
 		sistema.adicionarTabela(pessoa);
+		sistema.adicionarTabela(endereco_pessoa);
 		
 		try {
 			gerenciador.setFabricaConexao(new FabricaConexaoMySQL("root", "315865", "127.0.0.1", 3306));
 			gerenciador.conectar();
 			
-			System.out.println(gerenciador.gerarSQLTabela(endereco));
-			System.out.println(gerenciador.gerarSQLTabela(pessoa));
+			System.out.println(gerenciador.gerarScriptSQL(sistema));
 			gerenciador.executarScript(sistema);		
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

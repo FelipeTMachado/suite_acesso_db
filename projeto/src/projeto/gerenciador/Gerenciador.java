@@ -10,6 +10,7 @@ import projeto.estrutura.ChaveEstrangeira;
 import projeto.estrutura.ChavePrimaria;
 import projeto.estrutura.Coluna;
 import projeto.estrutura.ColunaDecimal;
+import projeto.estrutura.ColunaFacade;
 import projeto.estrutura.ColunaInt;
 import projeto.estrutura.ColunaVarchar;
 import projeto.estrutura.Esquema;
@@ -69,6 +70,17 @@ public class Gerenciador {
 		}
 	}
 
+	public String gerarScriptSQL(Esquema esquema) {
+		String sql = "CREATE DATABASE " + esquema.getNome() + ";\n\n";
+		
+		sql += "USE DATABASE " + esquema.getNome() + ";\n\n";
+		
+		for (Tabela tabela : esquema.getTabelas()) {
+			sql += gerarSQLTabela(tabela) + "\n\n";
+		}
+		
+		return sql;
+	}
 	
 	public boolean executarScript(Esquema esquema) throws SQLException {
 		Statement st = conexao.createStatement();
@@ -87,7 +99,7 @@ public class Gerenciador {
 		return true;
 	}
 	
-	public String gerarSQLTabela(Tabela tabela) {
+	private String gerarSQLTabela(Tabela tabela) {
 		String sql = "";
 		
 		sql += "CREATE TABLE " + tabela.getNome() + "(\n";
@@ -140,7 +152,7 @@ public class Gerenciador {
 		return sql += "\n);";
 	}
 	
-	public String gerarChavesEstrangeira(ChaveEstrangeira chave) {
+	private String gerarChavesEstrangeira(ChaveEstrangeira chave) {
 		String sql = "    FOREIGN KEY (" 
 				+ chave.getOrigem().getNome() + ")" 
 				+ " REFERENCES " 
@@ -149,7 +161,7 @@ public class Gerenciador {
 		return sql;
 	}
 	
-	public String gerarChavePrimaria(ChavePrimaria chave) {
+	private String gerarChavePrimaria(ChavePrimaria chave) {
 		String sql = "";
 		
 		if (chave.getColunas().size() == 1) {
@@ -176,7 +188,7 @@ public class Gerenciador {
 		return sql;
 	}
 	
-	public String gerarSQLColuna(Coluna coluna) {
+	private String gerarSQLColuna(Coluna coluna) {
 		String sql = "    " + coluna.getNome() + " ";
 		
 		if (coluna instanceof ColunaVarchar) {
@@ -218,6 +230,22 @@ public class Gerenciador {
 		}
 		
 		return sql;
+	}
+	
+	public Tabela gerarTabelaAssociativa(Tabela tabela_1, Tabela tabela_2) {
+		Tabela tabela = new Tabela(tabela_1.getNome() + "_" +  tabela_2.getNome());
+		
+		Coluna coluna_1 = ColunaFacade.criarColunaInt(tabela_1.getChavesPrimarias().get(0).getColunas().get(0).getNome());
+		Coluna coluna_2 = ColunaFacade.criarColunaInt(tabela_2.getChavesPrimarias().get(0).getColunas().get(0).getNome());
+		
+		tabela.adicionarColuna(coluna_1);
+		tabela.adicionarColuna(coluna_2);
+		
+		tabela.adicionarChavePrimaria(new ChavePrimaria("pk_composta", coluna_1, coluna_2));
+		tabela.adicionarChaveEstrangeira(new ChaveEstrangeira(coluna_1, coluna_1, tabela_1));
+		tabela.adicionarChaveEstrangeira(new ChaveEstrangeira(coluna_2, coluna_2, tabela_2));
+		
+		return tabela;
 	}
 
 	// GETTERS AND SETTERS
